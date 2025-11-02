@@ -1,8 +1,6 @@
 {
   "name": "PWA app",
   "short_name": "pwaapp",
-  "theme_color": "#8936FF",
-  "background_color": "#333333",
   "start_url": "/",
   "id": "pwaapp",
   "display": "standalone",
