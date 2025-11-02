@@ -1,0 +1,1 @@
+PWA app template with nextjs and tailwindcss
