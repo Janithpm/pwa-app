@@ -12,8 +12,8 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between">
-          <div className="mb-8 ">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8 my-8">
+          <div className="text-center lg:text-left">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
               PWA Dashboard
             </h2>
