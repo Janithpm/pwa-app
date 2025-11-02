@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState, useEffect } from "react";
 import { Download, Check } from "lucide-react";
@@ -14,7 +13,6 @@ export default function PWAInstallButton() {
     const [showButton, setShowButton] = useState(false);
 
     useEffect(() => {
-        // Check if app is already installed
         const checkInstalled = () => {
             if (typeof window === 'undefined') return;
 
@@ -31,14 +29,12 @@ export default function PWAInstallButton() {
 
         checkInstalled();
 
-        // Listen for beforeinstallprompt event
         const handleBeforeInstallPrompt = (e: Event) => {
             e.preventDefault();
             setDeferredPrompt(e as BeforeInstallPromptEvent);
             setShowButton(true);
         };
 
-        // Listen for app installed event
         const handleAppInstalled = () => {
             setIsInstalled(true);
             setShowButton(false);
