@@ -1,5 +1,6 @@
 {
   "name": "PWA app",
+  "version": "1.0.1",
   "short_name": "pwaapp",
   "start_url": "/",
   "id": "pwaapp",
@@ -7,25 +8,25 @@
   "description": "pwaapp is a Progressive Web App example.",
   "icons": [
     {
-      "src": "//manifest-icon-192.maskable.png",
+      "src": "manifest-icon-192.maskable.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "//manifest-icon-192.maskable.png",
+      "src": "manifest-icon-192.maskable.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "//manifest-icon-512.maskable.png",
+      "src": "manifest-icon-512.maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "//manifest-icon-512.maskable.png",
+      "src": "manifest-icon-512.maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
