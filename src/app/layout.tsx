@@ -1,5 +1,5 @@
 import React from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { cn } from "../lib/utils";
 import { Inter as FontSans } from "next/font/google";
 
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   manifest: "/web.manifest",
   appleWebApp: {
     capable: true,
-    statusBarStyle: "default",
+    statusBarStyle: "black-translucent",
     title: "Effi Rental"
   },
   icons: {
@@ -33,6 +33,14 @@ export const metadata: Metadata = {
     other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#0ea5e9" }]
   }
 };
+
+export const viewport: Viewport = {
+  maximumScale: 1,
+  minimumScale: 1,
+  userScalable: false,
+  width: "device-width",
+  initialScale: 1,
+}
 
 export default function RootLayout({
   children,
