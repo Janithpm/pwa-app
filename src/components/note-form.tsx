@@ -1,19 +1,9 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-const noteSchema = z.object({
-    userId: z.number().int().positive("Please select a user"),
-    title: z.string().min(1, "Title is required"),
-    content: z.string().min(1, "Content is required"),
-});
-
-type NoteFormData = z.infer<typeof noteSchema>;
+import { useState } from "react";
 
 interface User {
     id: number;
@@ -23,14 +13,9 @@ interface User {
 
 export function NoteForm() {
     const queryClient = useQueryClient();
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-        reset,
-    } = useForm<NoteFormData>({
-        resolver: zodResolver(noteSchema),
-    });
+    const [userId, setUserId] = useState("");
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
 
     const { data: users = [] } = useQuery<User[]>({
         queryKey: ["users"],
@@ -42,7 +27,7 @@ export function NoteForm() {
     });
 
     const mutation = useMutation({
-        mutationFn: async (data: NoteFormData) => {
+        mutationFn: async (data: { userId: number; title: string; content: string }) => {
             const response = await fetch("/api/notes", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -53,16 +38,23 @@ export function NoteForm() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["notes"] });
-            reset();
+            setUserId("");
+            setTitle("");
+            setContent("");
         },
     });
 
-    const onSubmit = (data: NoteFormData) => {
-        mutation.mutate(data);
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        mutation.mutate({
+            userId: parseInt(userId),
+            title,
+            content,
+        });
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 p-6 border rounded-lg">
+        <form onSubmit={handleSubmit} className="space-y-4 p-6 border rounded-lg">
             <h2 className="text-2xl font-bold">Create Note</h2>
 
             <div>
@@ -71,7 +63,9 @@ export function NoteForm() {
                 </label>
                 <select
                     id="userId"
-                    {...register("userId", { valueAsNumber: true })}
+                    value={userId}
+                    onChange={(e) => setUserId(e.target.value)}
+                    required
                     className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                     <option value="">Select a user</option>
@@ -81,19 +75,18 @@ export function NoteForm() {
                         </option>
                     ))}
                 </select>
-                {errors.userId && (
-                    <p className="text-sm text-red-500 mt-1">{errors.userId.message}</p>
-                )}
             </div>
 
             <div>
                 <label htmlFor="title" className="block text-sm font-medium mb-1">
                     Title
                 </label>
-                <Input id="title" {...register("title")} />
-                {errors.title && (
-                    <p className="text-sm text-red-500 mt-1">{errors.title.message}</p>
-                )}
+                <Input
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                />
             </div>
 
             <div>
@@ -102,13 +95,12 @@ export function NoteForm() {
                 </label>
                 <textarea
                     id="content"
-                    {...register("content")}
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
                     rows={4}
+                    required
                     className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 />
-                {errors.content && (
-                    <p className="text-sm text-red-500 mt-1">{errors.content.message}</p>
-                )}
             </div>
 
             <Button type="submit" disabled={mutation.isPending}>
