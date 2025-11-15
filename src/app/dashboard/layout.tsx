@@ -1,0 +1,25 @@
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import AppSidebar from "@/components/app-sidebar";
+import { layoutPreferences } from "@/config/app-config";
+import AppHeader from "@/components/app-header";
+import { cn } from "@/lib/utils";
+
+function DashboardLayout({ children }: { children: React.ReactNode }) {
+    return (
+        <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset
+                data-content-layout={layoutPreferences.contentLayout}
+                className={cn(
+                    "data-[content-layout=centered]:mx-auto! data-[content-layout=centered]:max-w-screen-2xl",
+                    "max-[113rem]:peer-data-[variant=inset]:mr-2! min-[101rem]:peer-data-[variant=inset]:peer-data-[state=collapsed]:mr-auto!",
+                )}
+            >
+                <AppHeader />
+                <div className="h-full p-4 md:p-6">{children}</div>
+            </SidebarInset>
+        </SidebarProvider>
+    )
+}
+
+export default DashboardLayout
