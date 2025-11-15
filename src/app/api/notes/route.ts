@@ -1,11 +1,9 @@
 import { db } from "@/db";
-import { notesTable, usersTable } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { notesTable } from "@/db/schema/test-schema";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
 const createNoteSchema = z.object({
-    userId: z.number().int().positive("User ID must be positive"),
     title: z.string().min(1, "Title is required"),
     content: z.string().min(1, "Content is required"),
 });
@@ -17,17 +15,10 @@ export async function GET() {
                 id: notesTable.id,
                 title: notesTable.title,
                 content: notesTable.content,
-                userId: notesTable.userId,
                 createdAt: notesTable.createdAt,
-                updatedAt: notesTable.updatedAt,
-                user: {
-                    id: usersTable.id,
-                    name: usersTable.name,
-                    email: usersTable.email,
-                },
+                updatedAt: notesTable.updatedAt
             })
             .from(notesTable)
-            .leftJoin(usersTable, eq(notesTable.userId, usersTable.id));
 
         return NextResponse.json(notes);
     } catch (error) {

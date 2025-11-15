@@ -13,21 +13,11 @@ interface User {
 
 export function NoteForm() {
     const queryClient = useQueryClient();
-    const [userId, setUserId] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
 
-    const { data: users = [] } = useQuery<User[]>({
-        queryKey: ["users"],
-        queryFn: async () => {
-            const response = await fetch("/api/users");
-            if (!response.ok) throw new Error("Failed to fetch users");
-            return response.json();
-        },
-    });
-
     const mutation = useMutation({
-        mutationFn: async (data: { userId: number; title: string; content: string }) => {
+        mutationFn: async (data: { title: string; content: string }) => {
             const response = await fetch("/api/notes", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -38,7 +28,6 @@ export function NoteForm() {
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ["notes"] });
-            setUserId("");
             setTitle("");
             setContent("");
         },
@@ -47,7 +36,6 @@ export function NoteForm() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         mutation.mutate({
-            userId: parseInt(userId),
             title,
             content,
         });
@@ -56,26 +44,6 @@ export function NoteForm() {
     return (
         <form onSubmit={handleSubmit} className="space-y-4 p-6 border rounded-lg">
             <h2 className="text-2xl font-bold">Create Note</h2>
-
-            <div>
-                <label htmlFor="userId" className="block text-sm font-medium mb-1">
-                    User
-                </label>
-                <select
-                    id="userId"
-                    value={userId}
-                    onChange={(e) => setUserId(e.target.value)}
-                    required
-                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                    <option value="">Select a user</option>
-                    {users.map((user) => (
-                        <option key={user.id} value={user.id}>
-                            {user.name} ({user.email})
-                        </option>
-                    ))}
-                </select>
-            </div>
 
             <div>
                 <label htmlFor="title" className="block text-sm font-medium mb-1">

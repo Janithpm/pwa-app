@@ -1,5 +1,5 @@
 import { getDb } from "@/db";
-import { usersTable } from "@/db/schema";
+import { usersTable } from "@/db/schema/test-schema";
 import { NextResponse } from "next/server";
 
 export const dynamic = 'force-dynamic';

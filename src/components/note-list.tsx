@@ -6,13 +6,7 @@ interface Note {
     id: number;
     title: string;
     content: string;
-    userId: number;
     createdAt: string;
-    user: {
-        id: number;
-        name: string;
-        email: string;
-    } | null;
 }
 
 export function NoteList() {
@@ -57,12 +51,6 @@ export function NoteList() {
                         >
                             <div className="flex justify-between items-start mb-2">
                                 <h3 className="font-semibold text-lg">{note.title}</h3>
-                                {note.user && (
-                                    <div className="text-right">
-                                        <p className="text-sm font-medium">{note.user.name}</p>
-                                        <p className="text-xs text-muted-foreground">{note.user.email}</p>
-                                    </div>
-                                )}
                             </div>
                             <p className="text-sm text-muted-foreground mb-2">{note.content}</p>
                             <p className="text-xs text-muted-foreground">
