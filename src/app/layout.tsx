@@ -2,8 +2,11 @@ import React from "react";
 import type { Metadata, Viewport } from "next";
 import { cn } from "../lib/utils";
 import { Inter as FontSans } from "next/font/google";
-
-import RootLayoutClient from "./RootLayoutClient";
+import LayoutClient from "./layout-client";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import AppSidebar from "@/components/app-sidebar";
+import { layoutPreferences } from "@/config/app-config";
+import AppHeader from "@/components/app-header";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -55,7 +58,21 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        <RootLayoutClient>{children}</RootLayoutClient>
+        <LayoutClient>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset
+              data-content-layout={layoutPreferences.contentLayout}
+              className={cn(
+                "data-[content-layout=centered]:mx-auto! data-[content-layout=centered]:max-w-screen-2xl",
+                "max-[113rem]:peer-data-[variant=inset]:mr-2! min-[101rem]:peer-data-[variant=inset]:peer-data-[state=collapsed]:mr-auto!",
+              )}
+            >
+              <AppHeader />
+              <div className="h-full p-4 md:p-6">{children}</div>
+            </SidebarInset>
+          </SidebarProvider>
+        </LayoutClient>
       </body>
     </html>
   );

@@ -2,7 +2,7 @@
 import React from "react";
 import "./globals.css";
 
-export default function RootLayoutClient({
+export default function LayoutClient({
   children,
 }: {
   children: React.ReactNode;
@@ -23,8 +23,5 @@ export default function RootLayoutClient({
     }
   }, []);
 
-  return (
-    <div className="container mx-auto px-4 max-w-5xl">{children}
-    </div>
-  );
+  return children;
 }

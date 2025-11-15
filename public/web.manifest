@@ -1,11 +1,11 @@
 {
-  "name": "PWA app",
-  "version": "1.0.1",
-  "short_name": "pwaapp",
+  "name": "EFFI Rental Dashboard",
+  "version": "1.0.2",
+  "short_name": "effiapp",
   "start_url": "/",
-  "id": "pwaapp",
+  "id": "effiapp",
   "display": "standalone",
-  "description": "pwaapp is a Progressive Web App example.",
+  "description": "effiapp is a rental dashboard application for managing rental properties and tenants efficiently.",
   "icons": [
     {
       "src": "manifest-icon-192.maskable.png",
