@@ -21,6 +21,7 @@ This file describes the core technologies and tools used in this project. Use th
 - **Database:** PostgreSQL
 - **ORM:** Drizzle ORM
 - **Entities:** Products, Orders, Users, Inventory
+- **Validation:** Zod and drizzle-zod
 
 ## API
 - **API Layer:** Next.js Route Handlers (REST)
@@ -38,9 +39,9 @@ This file describes the core technologies and tools used in this project. Use th
 ### Notes
 - Use TanStack Query for all server data fetching/caching.
 - Use Zustand for local UI/cart state.
-- Use React Hook Form + Zod for all forms and validation.
+- Use React Hook Form + Zod + drizzle-zod for all forms and validation.
 - All uploads (images, banners) should use Vercel Blob.
-- All backend data access should use Drizzle ORM.
+- All backend data access should use Drizzle ORM + drizzle-zod.
 - Deploy to Vercel, use Neon for PostgreSQL.
 - Monitor errors and analytics with Firebase Crashlytics.
 
