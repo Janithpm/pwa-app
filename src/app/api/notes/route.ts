@@ -1,5 +1,5 @@
-import { db } from "@/db";
-import { notesTable } from "@/db/schema/test-schema";
+import { db } from "@/db/db";
+import { notesTable } from "@/db/schemas/test-schema";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 

@@ -2,7 +2,7 @@ import { config } from 'dotenv';
 config({ path: '.env' });
 
 import { migrate } from 'drizzle-orm/neon-http/migrator';
-import { getDb } from '.';
+import { getDb } from './db';
 
 const main = async () => {
     console.log('Migration script started');
