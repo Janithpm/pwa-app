@@ -83,23 +83,6 @@ async function getData(url) {
   }
 }
 
-async function cacheFirstStrategy(request) {
-  try {
-    const cache = await caches.open(CACHE_NAME);
-    const cachedResponse = await cache.match(request);
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-    const networkResponse = await fetch(request);
-    const responseClone = networkResponse.clone();
-    await cache.put(request, responseClone);
-    return networkResponse;
-  } catch (error) {
-    console.error("Cache first strategy failed:", error);
-    return caches.match("/offline");
-  }
-}
-
 async function networkFirstStrategy(request) {
   try {
     const response = await fetch(request);
@@ -131,16 +114,10 @@ self.addEventListener("fetch", (event) => {
   const { request } = event;
   if (!request.url.startsWith("http")) return;
   const url = new URL(request.url);
-  if (url.origin === self.location.origin && request.mode !== "navigate") {
+  if (url.origin === self.location.origin) {
     event.respondWith(networkFirstStrategy(request));
     return;
   }
-
-  if (request.mode === "navigate") {
-    event.respondWith(cacheFirstStrategy(request));
-    return;
-  }
-
   event.respondWith(safeDynamicCaching(request));
 });
 
