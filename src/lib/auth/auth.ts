@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { nextCookies } from "better-auth/next-js";
 import { db } from "@/db/db";
+import { admin } from "better-auth/plugins/admin";
 
 export const auth = betterAuth({
     database: drizzleAdapter(db(), {
@@ -18,7 +19,7 @@ export const auth = betterAuth({
             maxAge: 60 * 5,
         }
     },
-    plugins: [nextCookies()],
+    plugins: [nextCookies(), admin()],
     emailAndPassword: {
         enabled: true,
     },

@@ -9,6 +9,14 @@ export default function Home() {
   const [hasAdminPermission, setHasAdminPermission] = useState(false)
   const { data: session, isPending: loading } = authClient.useSession()
 
+  useEffect(() => {
+    authClient.admin
+      .hasPermission({ permission: { user: ["list"] } })
+      .then(({ data }) => {
+        setHasAdminPermission(data?.success ?? false)
+      })
+  }, [])
+
   if (loading) {
     return <div>Loading...</div>
   }
@@ -35,7 +43,7 @@ export default function Home() {
               </Button>
               {hasAdminPermission && (
                 <Button variant="outline" asChild size="lg">
-                  <Link href="/admin">Admin</Link>
+                  <Link href="/dashboard">Admin Dashboard</Link>
                 </Button>
               )}
               <Button

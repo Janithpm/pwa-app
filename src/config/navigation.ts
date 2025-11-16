@@ -14,12 +14,12 @@ export const sidebarItems: NavGroup[] = [
         items: [
             {
                 title: "Dashboard",
-                url: "/seller/dashboard",
+                url: "/dashboard",
                 icon: LayoutDashboard,
             },
             {
                 title: "Analytics",
-                url: "/seller/dashboard/analytics",
+                url: "/dashboard/analytics",
                 icon: BarChart3,
             },
         ],
@@ -29,17 +29,17 @@ export const sidebarItems: NavGroup[] = [
 export const secondaryNavItems: NavMainItem[] = [
     {
         title: "Settings",
-        url: "/seller/dashboard/settings",
+        url: "/dashboard/settings",
         icon: Settings,
     },
     {
         title: "Get Help",
-        url: "/seller/dashboard/help",
+        url: "/dashboard/help",
         icon: CircleHelp,
     },
     {
         title: "Integrations",
-        url: "/seller/dashboard/integrations",
+        url: "/dashboard/integrations",
         icon: SquareArrowUpRight,
     },
 ]

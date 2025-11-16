@@ -9,6 +9,8 @@
     "lint": "next lint",
     "auth:generate": "pnpm dlx @better-auth/cli@latest generate --config ./src/lib/auth/auth.ts --output ./src/db/schemas/auth-schema.ts --yes",
     "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
     "db:migrate": "tsx ./src/db/migrate.ts"
   },
   "dependencies": {
