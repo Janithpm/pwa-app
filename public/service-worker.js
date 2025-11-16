@@ -87,11 +87,9 @@ async function cacheFirstStrategy(request) {
   try {
     const cache = await caches.open(CACHE_NAME);
     const cachedResponse = await cache.match(request);
-
     if (cachedResponse) {
       return cachedResponse;
     }
-
     const networkResponse = await fetch(request);
     const responseClone = networkResponse.clone();
     await cache.put(request, responseClone);
@@ -104,55 +102,58 @@ async function cacheFirstStrategy(request) {
 
 async function networkFirstStrategy(request) {
   try {
-    const networkResponse = await fetch(request);
-
-    if (networkResponse.ok) {
-      const responseClone = networkResponse.clone();
-      const responseData = await responseClone.json();
-      await addData(request.url, responseData);
-      return networkResponse;
+    const response = await fetch(request);
+    if (response.ok) {
+      const clone = response.clone();
+      const contentType = response.headers.get("Content-Type") || "";
+      if (contentType.includes("application/json")) {
+        const data = await clone.json();
+        await addData(request.url, data);
+      }
+      return response;
     }
 
-    throw new Error("Network response was not ok");
+    throw new Error("Network not OK");
   } catch (error) {
     console.error("Network first strategy failed:", error);
-    const cachedResponse = await getData(request.url);
-
-    if (cachedResponse) {
-      console.log("Using cached response:", cachedResponse);
-      return new Response(JSON.stringify(cachedResponse), {
+    const cachedData = await getData(request.url);
+    if (cachedData) {
+      return new Response(JSON.stringify(cachedData), {
         status: 200,
         headers: { "Content-Type": "application/json" },
       });
     }
-
-    return new Response("[]", { status: 200 });
+    return caches.match("/fallback");
   }
 }
 
-async function dynamicCaching(request) {
-  const cache = await caches.open(CACHE_NAME);
+self.addEventListener("fetch", (event) => {
+  const { request } = event;
+  if (!request.url.startsWith("http")) return;
+  const url = new URL(request.url);
+  if (url.origin === self.location.origin && request.mode !== "navigate") {
+    event.respondWith(networkFirstStrategy(request));
+    return;
+  }
 
+  if (request.mode === "navigate") {
+    event.respondWith(cacheFirstStrategy(request));
+    return;
+  }
+
+  event.respondWith(safeDynamicCaching(request));
+});
+
+async function safeDynamicCaching(request) {
+  const cache = await caches.open(CACHE_NAME);
   try {
     const response = await fetch(request);
-    const responseClone = response.clone();
-    await cache.put(request, responseClone);
+    if (response.ok && request.url.startsWith(self.location.origin)) {
+      cache.put(request, response.clone()).catch(() => { });
+    }
     return response;
   } catch (error) {
     console.error("Dynamic caching failed:", error);
     return caches.match(request);
   }
 }
-
-self.addEventListener("fetch", (event) => {
-  const { request } = event;
-  const url = new URL(request.url);
-
-  if (url.origin === "http://localhost:3000") {
-    event.respondWith(networkFirstStrategy(request));
-  } else if (event.request.mode === "navigate") {
-    event.respondWith(cacheFirstStrategy(request));
-  } else {
-    event.respondWith(dynamicCaching(request));
-  }
-});
