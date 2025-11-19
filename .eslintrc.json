@@ -1,20 +1,23 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
-  "overrides": [
-    {
-      "files": ["components/ui/**/*.{ts,tsx}"],
-      "rules": {
-        "all": "off"
-      }
-    }
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "semi": ["error", "never"],
-    "prettier/prettier": [
-      "error",
-      {
-        "semi": false
-      }
-    ]
-  }
+    "prettier/prettier": ["error", { "semi": false }]
+  },
+  "overrides": [
+    {
+      "files": ["components/ui/**/*.{ts,tsx}"],
+      "rules": { "all": "off" }
+    }
+  ]
 }
