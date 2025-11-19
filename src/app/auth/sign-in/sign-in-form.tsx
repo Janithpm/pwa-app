@@ -9,10 +9,13 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/auth-client";
 import { type SignInFormData, SignInFormSchema } from "@/zod/auth-forms";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export function SignInForm() {
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const callbackUrl = searchParams.get('callbackUrl') || '/'
+    
     const form = useForm<SignInFormData>({
         resolver: zodResolver(SignInFormSchema),
         defaultValues: {
@@ -25,21 +28,21 @@ export function SignInForm() {
     const handleSignIn = async (data: SignInFormData) => {
         try {
             await authClient.signIn.email(
-                { ...data, callbackURL: "/" },
+                { ...data },
                 {
                     onError: (error) => {
-                        toast.error('Sign in failed: ');
-                        console.log(error);
+                        toast.error('Sign in failed');
+                        console.error(error);
                     },
                     onSuccess: () => {
-                        router.push("/")
                         toast.success("Successfully signed in!");
+                        window.location.href = callbackUrl
                     }
                 }
             )
         } catch (error) {
             toast.error("An unexpected error occurred. Please try again.");
-            console.log(error);
+            console.error(error);
         }
     };
 

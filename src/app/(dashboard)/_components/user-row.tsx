@@ -21,7 +21,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { TableCell, TableRow } from "@/components/ui/table"
-import { authClient } from "@/lib/auth/auth-client"
 import { UserWithRole } from "better-auth/plugins/admin"
 import { MoreHorizontal } from "lucide-react"
 import { useRouter } from "next/navigation"
@@ -34,82 +33,108 @@ export function UserRow({
   user: UserWithRole
   selfId: string
 }) {
-  const { refetch } = authClient.useSession()
   const router = useRouter()
   const isSelf = user.id === selfId
 
-  function handleImpersonateUser(userId: string) {
-    authClient.admin.impersonateUser(
-      { userId },
-      {
-        onError: error => {
-          toast.error(error.error.message || "Failed to impersonate")
-        },
-        onSuccess: () => {
-          refetch()
-          router.push("/")
-        },
+  async function handleImpersonateUser(userId: string) {
+    try {
+      const response = await fetch('/api/admin/impersonate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId }),
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        toast.error(error.error || "Failed to impersonate")
+        return
       }
-    )
+
+      toast.success("Impersonating user")
+      window.location.href = '/'
+    } catch (error) {
+      toast.error("Failed to impersonate user")
+      console.error(error)
+    }
   }
 
-  function handleBanUser(userId: string) {
-    authClient.admin.banUser(
-      { userId },
-      {
-        onError: error => {
-          toast.error(error.error.message || "Failed to ban user")
-        },
-        onSuccess: () => {
-          toast.success("User banned")
-          router.refresh()
-        },
+  async function handleBanUser(userId: string) {
+    try {
+      const response = await fetch(`/api/admin/users/${userId}/ban`, {
+        method: 'POST',
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        toast.error(error.error || "Failed to ban user")
+        return
       }
-    )
+
+      toast.success("User banned")
+      router.refresh()
+    } catch (error) {
+      toast.error("Failed to ban user")
+      console.error(error)
+    }
   }
 
-  function handleUnbanUser(userId: string) {
-    authClient.admin.unbanUser(
-      { userId },
-      {
-        onError: error => {
-          toast.error(error.error.message || "Failed to unban user")
-        },
-        onSuccess: () => {
-          toast.success("User unbanned")
-          router.refresh()
-        },
+  async function handleUnbanUser(userId: string) {
+    try {
+      const response = await fetch(`/api/admin/users/${userId}/unban`, {
+        method: 'POST',
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        toast.error(error.error || "Failed to unban user")
+        return
       }
-    )
+
+      toast.success("User unbanned")
+      router.refresh()
+    } catch (error) {
+      toast.error("Failed to unban user")
+      console.error(error)
+    }
   }
 
-  function handleRevokeSessions(userId: string) {
-    authClient.admin.revokeUserSessions(
-      { userId },
-      {
-        onError: error => {
-          toast.error(error.error.message || "Failed to revoke user sessions")
-        },
-        onSuccess: () => {
-          toast.success("User sessions revoked")
-        },
+  async function handleRevokeSessions(userId: string) {
+    try {
+      const response = await fetch(`/api/admin/users/${userId}/sessions`, {
+        method: 'DELETE',
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        toast.error(error.error || "Failed to revoke sessions")
+        return
       }
-    )
+
+      toast.success("User sessions revoked")
+    } catch (error) {
+      toast.error("Failed to revoke sessions")
+      console.error(error)
+    }
   }
 
-  function handleRemoveUser(userId: string) {
-    authClient.admin.removeUser(
-      { userId },
-      {
-        onError: error => {
-          toast.error(error.error.message || "Failed to delete user")
-        },
-        onSuccess: () => {
-          toast.success("User deleted")
-          router.refresh()
-        },
+  async function handleRemoveUser(userId: string) {
+    try {
+      const response = await fetch(`/api/admin/users/${userId}`, {
+        method: 'DELETE',
+      })
+
+      if (!response.ok) {
+        const error = await response.json()
+        toast.error(error.error || "Failed to delete user")
+        return
       }
-    )
+
+      toast.success("User deleted")
+      router.refresh()
+    } catch (error) {
+      toast.error("Failed to delete user")
+      console.error(error)
+    }
   }
 
   return (

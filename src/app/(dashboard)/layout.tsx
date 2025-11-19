@@ -1,12 +1,17 @@
-"use client"
-
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "@/components/app-sidebar";
 import { layoutPreferences } from "@/config/app-config";
 import AppHeader from "@/components/app-header";
 import { cn } from "@/lib/utils";
+import { getSession } from "@/lib/auth/get-session";
+import { redirect } from "next/navigation";
 
-function DashboardLayout({ children }: { children: React.ReactNode }) {
+async function DashboardLayout({ children }: { children: React.ReactNode }) {
+    const session = await getSession()
+    if (!session) {
+        redirect('/auth/sign-in')
+    }
+
     return (
         <SidebarProvider>
             <AppSidebar />

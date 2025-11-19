@@ -1,58 +1,30 @@
-"use client"
-
 import { Button } from "@/components/ui/button"
-import { authClient } from "@/lib/auth/auth-client"
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { getSession } from "@/lib/auth/get-session"
+import { SignOutButton } from "./_components/sign-out-button"
 
-export default function Home() {
-  const [hasAdminPermission, setHasAdminPermission] = useState(false)
-  const { data: session, isPending: loading } = authClient.useSession()
-
-  useEffect(() => {
-    authClient.admin
-      .hasPermission({ permission: { user: ["list"] } })
-      .then(({ data }) => {
-        setHasAdminPermission(data?.success ?? false)
-      })
-  }, [])
-
-  if (loading) {
-    return <div>Loading...</div>
-  }
+export default async function Home() {
+  const session = await getSession()
+  const isAdmin = session?.user.role === 'admin'
 
   return (
     <div className="my-6 px-4 max-w-md mx-auto">
       <div className="text-center space-y-6">
-        {session == null ? (
-          <>
-            <h1 className="text-3xl font-bold">Welcome to Our App</h1>
-          </>
-        ) : (
-          <>
-            <h1 className="text-3xl font-bold">Welcome {session.user.name}!</h1>
-            <div className="flex gap-4 justify-center">
-              <Button asChild size="lg">
-                <Link href="/profile">Profile</Link>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <Link href="/organizations">Organizations</Link>
-              </Button>
-              {hasAdminPermission && (
-                <Button variant="outline" asChild size="lg">
-                  <Link href="/dashboard">Admin Dashboard</Link>
-                </Button>
-              )}
-              <Button
-                size="lg"
-                variant="destructive"
-                onClick={() => authClient.signOut()}
-              >
-                Sign Out
-              </Button>
-            </div>
-          </>
-        )}
+        <h1 className="text-3xl font-bold">Welcome {session?.user.name}!</h1>
+        <div className="flex gap-4 justify-center flex-wrap">
+          <Button asChild size="lg">
+            <Link href="/profile">Profile</Link>
+          </Button>
+          <Button asChild size="lg" variant="outline">
+            <Link href="/organizations">Organizations</Link>
+          </Button>
+          {isAdmin && (
+            <Button variant="outline" asChild size="lg">
+              <Link href="/test">Admin Dashboard</Link>
+            </Button>
+          )}
+          <SignOutButton />
+        </div>
       </div>
     </div>
   )

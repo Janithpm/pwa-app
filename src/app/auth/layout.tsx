@@ -1,11 +1,16 @@
-"use client";
-
 import { ReactNode } from "react";
 import { Command } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { APP_CONFIG } from "@/config/app-config";
+import { getSession } from "@/lib/auth/get-session";
+import { redirect } from "next/navigation";
 
-export default function AuthLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default async function AuthLayout({ children }: Readonly<{ children: ReactNode }>) {
+    const session = await getSession()
+    if (session) {
+        redirect('/')
+    }
+
     return (
         <main>
             <div className="grid h-dvh justify-center p-2 lg:grid-cols-2">
