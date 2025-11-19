@@ -10,9 +10,9 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "pwaapp",
+  title: "Effi Rental Dashboard",
   description:
-    "pwaapp is a Progressive Web App example.",
+    "Effi Rental Dashboard - Manage your rental operations with ease and efficiency.",
   manifest: "/web.manifest",
   appleWebApp: {
     capable: true,
