@@ -1,23 +1,11 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { Command } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { APP_CONFIG } from "@/config/app-config";
-import { authClient } from "@/lib/auth/auth-client";
-import { useRouter } from "next/navigation";
 
 export default function AuthLayout({ children }: Readonly<{ children: ReactNode }>) {
-    //Todo: make this more efficient and faster some how
-    const router = useRouter();
-    useEffect(() => {
-        authClient.getSession().then((session) => {
-            if (session.data) {
-                router.push("/");
-            }
-        });
-    }, [router]);
-
     return (
         <main>
             <div className="grid h-dvh justify-center p-2 lg:grid-cols-2">

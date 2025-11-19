@@ -28,7 +28,7 @@ export default function Home() {
           <>
             <h1 className="text-3xl font-bold">Welcome to Our App</h1>
             <Button asChild size="lg">
-              <Link href="/auth/login">Sign In / Sign Up</Link>
+              <Link href="/auth/sign-in">Sign In / Sign Up</Link>
             </Button>
           </>
         ) : (
