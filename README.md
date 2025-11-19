@@ -5,6 +5,7 @@ pnpm dlx pwa-asset-generator public/logo.svg public/assets -m public/web.manifes
 ```
 
 Generate icons (Android + maskable) and favicons, and update the manifest
+
 ```
 pnpm dlx pwa-asset-generator public/logo.svg public \
   -m public/web.manifest \
@@ -16,6 +17,7 @@ pnpm dlx pwa-asset-generator public/logo.svg public \
 ```
 
 Generate iOS splash screens (light)
+
 ```
 pnpm dlx pwa-asset-generator public/logo.svg public \
   --splash-only \
@@ -26,6 +28,7 @@ pnpm dlx pwa-asset-generator public/logo.svg public \
 ```
 
 Generate iOS splash screens (dark)
+
 ```
 pnpm dlx pwa-asset-generator public/logo.svg public \
   --splash-only --dark \
@@ -37,6 +40,7 @@ pnpm dlx pwa-asset-generator public/logo.svg public \
 
 Safari pinned tab (macOS)
 If your logo.svg is monochrome or works as a single-color glyph:
+
 ```
 cp public/logo.svg public/safari-pinned-tab.svg
 ```

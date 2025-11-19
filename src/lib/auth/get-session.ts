@@ -2,9 +2,9 @@ import { headers } from 'next/headers'
 import { auth } from './auth'
 import type { Session, User } from 'better-auth/types'
 
-export async function getSession(): Promise<{ session: Session, user: User } | null> {
+export async function getSession(): Promise<{ session: Session; user: User } | null> {
   const session = await auth.api.getSession({
-    headers: headers()
+    headers: headers(),
   })
   return session
 }

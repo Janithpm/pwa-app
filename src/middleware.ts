@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
   const session = await auth.api.getSession({
-    headers: request.headers
+    headers: request.headers,
   })
 
   const isAuthenticated = session !== null
@@ -19,7 +19,6 @@ export async function middleware(request: NextRequest) {
   if (isAuthenticated && isAuthRoute) {
     return NextResponse.redirect(new URL('/', request.url))
   }
-
 
   if (!isAuthenticated && !isPublicRoute) {
     const signInUrl = new URL('/auth/sign-in', request.url)

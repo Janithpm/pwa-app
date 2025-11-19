@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-import { getSession } from "@/lib/auth/get-session"
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
+import { getSession } from '@/lib/auth/get-session'
 
 export default async function Home() {
   const session = await getSession()

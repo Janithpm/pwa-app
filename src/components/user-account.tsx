@@ -1,86 +1,82 @@
-"use client";
+'use client'
 
-import { LogOut } from "lucide-react";
-import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { LogOut } from 'lucide-react'
+import Link from 'next/link'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-    DropdownMenuGroup,
-} from "@/components/ui/dropdown-menu";
-import { getInitials } from "@/lib/utils";
-import { useCurrentUser } from "@/lib/auth/use-session";
-import { accountDropdownItems } from "@/config/routes";
-import { authClient } from "@/lib/auth/auth-client";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuGroup,
+} from '@/components/ui/dropdown-menu'
+import { getInitials } from '@/lib/utils'
+import { useCurrentUser } from '@/lib/auth/use-session'
+import { accountDropdownItems } from '@/config/routes'
+import { authClient } from '@/lib/auth/auth-client'
 
 export function UserAccount() {
-    const { user } = useCurrentUser();
-    if (!user) {
-        return null;
-    }
+  const { user } = useCurrentUser()
+  if (!user) {
+    return null
+  }
 
-    const handleSignOut = async () => {
-        await authClient.signOut({
-            fetchOptions: {
-                onSuccess: () => {
-                    window.location.href = '/auth/sign-in'
-                },
-            },
-        })
-    }
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          window.location.href = '/auth/sign-in'
+        },
+      },
+    })
+  }
 
-    return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <button className="cursor-pointer border-0 bg-transparent p-0 focus:outline-none">
-                    <Avatar className="size-9 rounded-lg">
-                        <AvatarImage src={user.image || undefined} alt={user.name} />
-                        <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
-                    </Avatar>
-                </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="min-w-56 space-y-1 rounded-lg" side="bottom" align="end" sideOffset={4}>
-                <DropdownMenuItem
-                    key={user.email}
-                    className="p-0">
-                    <div className="flex w-full items-center justify-between gap-2 px-1 py-1.5">
-                        <Avatar className="size-9 rounded-lg">
-                            <AvatarImage src={user.image || undefined} alt={user.name} />
-                            <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
-                        </Avatar>
-                        <div className="grid flex-1 text-left text-sm leading-tight">
-                            <span className="truncate font-semibold">{user.name}</span>
-                            <span className="truncate text-xs capitalize">{user.role}</span>
-                        </div>
-                    </div>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    {
-                        accountDropdownItems.map((item) => (
-                            <Link
-                                key={item.title}
-                                href={item.url}>
-                                <DropdownMenuItem
-                                    className="cursor-pointer">
-                                    {item.icon && <item.icon />}
-                                    {item.title}
-                                </DropdownMenuItem>
-                            </Link>
-                        ))
-                    }
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                    className="cursor-pointer"
-                    onSelect={handleSignOut}>
-                    <LogOut />
-                    Log out
-                </DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu>
-    );
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="cursor-pointer border-0 bg-transparent p-0 focus:outline-none">
+          <Avatar className="size-9 rounded-lg">
+            <AvatarImage src={user.image || undefined} alt={user.name} />
+            <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
+          </Avatar>
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent
+        className="min-w-56 space-y-1 rounded-lg"
+        side="bottom"
+        align="end"
+        sideOffset={4}
+      >
+        <DropdownMenuItem key={user.email} className="p-0">
+          <div className="flex w-full items-center justify-between gap-2 px-1 py-1.5">
+            <Avatar className="size-9 rounded-lg">
+              <AvatarImage src={user.image || undefined} alt={user.name} />
+              <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
+            </Avatar>
+            <div className="grid flex-1 text-left text-sm leading-tight">
+              <span className="truncate font-semibold">{user.name}</span>
+              <span className="truncate text-xs capitalize">{user.role}</span>
+            </div>
+          </div>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          {accountDropdownItems.map(item => (
+            <Link key={item.title} href={item.url}>
+              <DropdownMenuItem className="cursor-pointer">
+                {item.icon && <item.icon />}
+                {item.title}
+              </DropdownMenuItem>
+            </Link>
+          ))}
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem className="cursor-pointer" onSelect={handleSignOut}>
+          <LogOut />
+          Log out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }

@@ -1,13 +1,20 @@
 {
-  "extends": "next/core-web-vitals",
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
   "overrides": [
     {
-      "files": [
-        "components/ui/**/*.{ts,tsx}"
-      ],
+      "files": ["components/ui/**/*.{ts,tsx}"],
       "rules": {
         "all": "off"
       }
     }
-  ]
+  ],
+  "rules": {
+    "semi": ["error", "never"],
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": false
+      }
+    ]
+  }
 }
