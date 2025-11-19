@@ -9,8 +9,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth/auth-client";
 import { type SignInFormData, SignInFormSchema } from "@/zod/auth-forms";
+import { useRouter } from "next/navigation";
 
 export function SignInForm() {
+    const router = useRouter()
     const form = useForm<SignInFormData>({
         resolver: zodResolver(SignInFormSchema),
         defaultValues: {
@@ -30,6 +32,7 @@ export function SignInForm() {
                         console.log(error);
                     },
                     onSuccess: () => {
+                        router.push("/")
                         toast.success("Successfully signed in!");
                     }
                 }
