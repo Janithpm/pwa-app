@@ -2,6 +2,7 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { layoutPreferences } from "@/config/app-config"
 import { cn } from "@/lib/utils"
+import { UserAccount } from "./user-account"
 
 function AppHeader() {
     return (
@@ -19,7 +20,7 @@ function AppHeader() {
                     {/* <SearchDialog /> */}
                 </div>
                 <div className="flex items-center gap-2">
-                    {/* <AccountSwitcher users={users} /> */}
+                    <UserAccount />
                 </div>
             </div>
         </header>

@@ -23,7 +23,7 @@ import {
     SidebarMenuSubItem,
     useSidebar,
 } from "@/components/ui/sidebar";
-import { sidebarItems } from "@/config/navigation";
+import { sidebarItems } from "@/config/routes";
 import { NavMainItem } from "@/types/navigation";
 
 const NavItemExpanded = ({

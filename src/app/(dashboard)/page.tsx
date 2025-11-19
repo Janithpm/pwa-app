@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { getSession } from "@/lib/auth/get-session"
-import { SignOutButton } from "./_components/sign-out-button"
 
 export default async function Home() {
   const session = await getSession()
@@ -23,7 +22,6 @@ export default async function Home() {
               <Link href="/test">Admin Dashboard</Link>
             </Button>
           )}
-          <SignOutButton />
         </div>
       </div>
     </div>

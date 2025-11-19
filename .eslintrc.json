@@ -1,3 +1,13 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "overrides": [
+    {
+      "files": [
+        "components/ui/**/*.{ts,tsx}"
+      ],
+      "rules": {
+        "all": "off"
+      }
+    }
+  ]
 }

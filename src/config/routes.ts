@@ -16,6 +16,7 @@ import {
     UserCog,
     Users,
     Wrench,
+    Bell,
 } from "lucide-react";
 
 export const sidebarItems: NavGroup[] = [
@@ -198,6 +199,19 @@ export const secondaryNavItems: NavMainItem[] = [
         title: "Integrations",
         url: "/dashboard/integrations",
         icon: SquareArrowUpRight,
+    },
+];
+
+export const accountDropdownItems: NavMainItem[] = [
+    {
+        title: "Account",
+        url: "/dashboard/account",
+        icon: ShieldCheck,
+    },
+    {
+        title: "Notifications",
+        url: "/dashboard/notifications",
+        icon: Bell,
     },
 ];
 
