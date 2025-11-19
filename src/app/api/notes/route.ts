@@ -2,6 +2,7 @@ import { db } from "@/db/db";
 import { notesTable } from "@/db/schemas/test-schema";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { requireAuth } from "@/lib/auth/get-session";
 
 const createNoteSchema = z.object({
     title: z.string().min(1, "Title is required"),
@@ -10,6 +11,7 @@ const createNoteSchema = z.object({
 
 export async function GET() {
     try {
+        await requireAuth()
         const notes = await db()
             .select({
                 id: notesTable.id,
@@ -22,6 +24,10 @@ export async function GET() {
 
         return NextResponse.json(notes);
     } catch (error) {
+        if (error instanceof Error && error.message === 'Unauthorized') {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+        
         console.error("Error fetching notes:", error);
         return NextResponse.json(
             { error: "Failed to fetch notes" },
@@ -32,6 +38,7 @@ export async function GET() {
 
 export async function POST(request: Request) {
     try {
+        await requireAuth()
         const body = await request.json();
         const validatedData = createNoteSchema.parse(body);
 
@@ -42,6 +49,10 @@ export async function POST(request: Request) {
 
         return NextResponse.json(newNote, { status: 201 });
     } catch (error) {
+        if (error instanceof Error && error.message === 'Unauthorized') {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+        }
+        
         if (error instanceof z.ZodError) {
             return NextResponse.json(
                 { error: "Validation failed", details: error.issues },
