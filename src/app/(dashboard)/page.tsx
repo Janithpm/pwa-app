@@ -27,9 +27,6 @@ export default function Home() {
         {session == null ? (
           <>
             <h1 className="text-3xl font-bold">Welcome to Our App</h1>
-            <Button asChild size="lg">
-              <Link href="/auth/sign-in">Sign In / Sign Up</Link>
-            </Button>
           </>
         ) : (
           <>
