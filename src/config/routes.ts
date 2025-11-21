@@ -17,6 +17,7 @@ import {
   Users,
   Wrench,
   Bell,
+  Map,
 } from 'lucide-react'
 
 export const sidebarItems: NavGroup[] = [
@@ -26,17 +27,22 @@ export const sidebarItems: NavGroup[] = [
     items: [
       {
         title: 'Dashboard',
-        url: '/dashboard',
+        url: '/',
         icon: LayoutDashboard,
       },
       {
+        title: 'Fleet Map',
+        url: '/fleet-map',
+        icon: Map,
+      },
+      {
         title: 'Analytics',
-        url: '/dashboard/analytics',
+        url: '/analytics',
         icon: BarChart3,
         subItems: [
-          { title: 'Revenue', url: '/dashboard/analytics/revenue' },
-          { title: 'Fleet Usage', url: '/dashboard/analytics/fleet' },
-          { title: 'Bookings', url: '/dashboard/analytics/bookings' },
+          { title: 'Revenue', url: '/analytics/revenue' },
+          { title: 'Fleet Usage', url: '/analytics/fleet' },
+          { title: 'Bookings', url: '/analytics/bookings' },
         ],
       },
     ],
@@ -48,23 +54,23 @@ export const sidebarItems: NavGroup[] = [
     items: [
       {
         title: 'Vehicles',
-        url: '/dashboard/vehicles',
+        url: '/vehicles',
         icon: Car,
         subItems: [
-          { title: 'All Vehicles', url: '/dashboard/vehicles' },
-          { title: 'Add Vehicle', url: '/dashboard/vehicles/add' },
-          { title: 'Vehicle Types', url: '/dashboard/vehicles/types' },
-          { title: 'Documents', url: '/dashboard/vehicles/documents' },
+          { title: 'All Vehicles', url: '/vehicles' },
+          { title: 'Add Vehicle', url: '/vehicles/add' },
+          { title: 'Vehicle Types', url: '/vehicles/types' },
+          { title: 'Documents', url: '/vehicles/documents' },
         ],
       },
       {
         title: 'Maintenance',
-        url: '/dashboard/maintenance',
+        url: '/maintenance',
         icon: Wrench,
         subItems: [
-          { title: 'Tasks', url: '/dashboard/maintenance' },
-          { title: 'Service History', url: '/dashboard/maintenance/history' },
-          { title: 'Expense Log', url: '/dashboard/maintenance/expenses' },
+          { title: 'Tasks', url: '/maintenance' },
+          { title: 'Service History', url: '/maintenance/history' },
+          { title: 'Expense Log', url: '/maintenance/expenses' },
         ],
       },
     ],
@@ -76,31 +82,31 @@ export const sidebarItems: NavGroup[] = [
     items: [
       {
         title: 'Bookings',
-        url: '/dashboard/bookings',
+        url: '/bookings',
         icon: CalendarCheck,
         subItems: [
-          { title: 'All Bookings', url: '/dashboard/bookings' },
-          { title: 'Create Booking', url: '/dashboard/bookings/create' },
-          { title: 'Calendar View', url: '/dashboard/bookings/calendar' },
+          { title: 'All Bookings', url: '/bookings' },
+          { title: 'Create Booking', url: '/bookings/create' },
+          { title: 'Calendar View', url: '/bookings/calendar' },
         ],
       },
       {
         title: 'Payments',
-        url: '/dashboard/payments',
+        url: '/payments',
         icon: CreditCard,
         subItems: [
-          { title: 'All Payments', url: '/dashboard/payments' },
-          { title: 'Pending', url: '/dashboard/payments/pending' },
-          { title: 'Refunds', url: '/dashboard/payments/refunds' },
+          { title: 'All Payments', url: '/payments' },
+          { title: 'Pending', url: '/payments/pending' },
+          { title: 'Refunds', url: '/payments/refunds' },
         ],
       },
       {
         title: 'Agreements',
-        url: '/dashboard/agreements',
+        url: '/agreements',
         icon: FileSignature,
         subItems: [
-          { title: 'All Agreements', url: '/dashboard/agreements' },
-          { title: 'Templates', url: '/dashboard/agreements/templates' },
+          { title: 'All Agreements', url: '/agreements' },
+          { title: 'Templates', url: '/agreements/templates' },
         ],
       },
     ],
@@ -112,12 +118,12 @@ export const sidebarItems: NavGroup[] = [
     items: [
       {
         title: 'Customers',
-        url: '/dashboard/customers',
+        url: '/customers',
         icon: Users,
         subItems: [
-          { title: 'All Customers', url: '/dashboard/customers' },
-          { title: 'Add Customer', url: '/dashboard/customers/add' },
-          { title: 'Blacklist', url: '/dashboard/customers/blacklist' },
+          { title: 'All Customers', url: '/customers' },
+          { title: 'Add Customer', url: '/customers/add' },
+          { title: 'Blacklist', url: '/customers/blacklist' },
         ],
       },
     ],
@@ -129,20 +135,20 @@ export const sidebarItems: NavGroup[] = [
     items: [
       {
         title: 'Staff',
-        url: '/dashboard/staff',
+        url: '/staff',
         icon: UserCog,
         subItems: [
-          { title: 'All Staff', url: '/dashboard/staff' },
-          { title: 'Invite Staff', url: '/dashboard/staff/invite' },
+          { title: 'All Staff', url: '/staff' },
+          { title: 'Invite Staff', url: '/staff/invite' },
         ],
       },
       {
         title: 'Roles & Permissions',
-        url: '/dashboard/roles',
+        url: '/roles',
         icon: ShieldCheck,
         subItems: [
-          { title: 'Roles', url: '/dashboard/roles' },
-          { title: 'Permissions', url: '/dashboard/roles/permissions' },
+          { title: 'Roles', url: '/roles' },
+          { title: 'Permissions', url: '/roles/permissions' },
         ],
       },
     ],
@@ -154,30 +160,30 @@ export const sidebarItems: NavGroup[] = [
     items: [
       {
         title: 'Invoices',
-        url: '/dashboard/invoices',
+        url: '/invoices',
         icon: Scroll,
         subItems: [
-          { title: 'All Invoices', url: '/dashboard/invoices' },
-          { title: 'Overdue', url: '/dashboard/invoices/overdue' },
+          { title: 'All Invoices', url: '/invoices' },
+          { title: 'Overdue', url: '/invoices/overdue' },
         ],
       },
       {
         title: 'Transactions',
-        url: '/dashboard/transactions',
+        url: '/transactions',
         icon: Banknote,
         subItems: [
-          { title: 'All Transactions', url: '/dashboard/transactions' },
-          { title: 'Payouts', url: '/dashboard/transactions/payouts' },
+          { title: 'All Transactions', url: '/transactions' },
+          { title: 'Payouts', url: '/transactions/payouts' },
         ],
       },
       {
         title: 'Reports',
-        url: '/dashboard/reports',
+        url: '/reports',
         icon: PieChart,
         subItems: [
-          { title: 'Financial', url: '/dashboard/reports/financial' },
-          { title: 'Fleet Performance', url: '/dashboard/reports/fleet' },
-          { title: 'Customer Insights', url: '/dashboard/reports/customers' },
+          { title: 'Financial', url: '/reports/financial' },
+          { title: 'Fleet Performance', url: '/reports/fleet' },
+          { title: 'Customer Insights', url: '/reports/customers' },
         ],
       },
     ],
@@ -187,17 +193,17 @@ export const sidebarItems: NavGroup[] = [
 export const secondaryNavItems: NavMainItem[] = [
   {
     title: 'Settings',
-    url: '/dashboard/settings',
+    url: '/settings',
     icon: Settings,
   },
   {
     title: 'Get Help',
-    url: '/dashboard/help',
+    url: '/help',
     icon: CircleHelp,
   },
   {
     title: 'Integrations',
-    url: '/dashboard/integrations',
+    url: '/integrations',
     icon: SquareArrowUpRight,
   },
 ]
@@ -205,12 +211,12 @@ export const secondaryNavItems: NavMainItem[] = [
 export const accountDropdownItems: NavMainItem[] = [
   {
     title: 'Account',
-    url: '/dashboard/account',
+    url: '/account',
     icon: ShieldCheck,
   },
   {
     title: 'Notifications',
-    url: '/dashboard/notifications',
+    url: '/notifications',
     icon: Bell,
   },
 ]

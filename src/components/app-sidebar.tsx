@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import {
   Sidebar,
@@ -8,21 +8,21 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar'
-import { APP_CONFIG } from '@/config/app-config'
-import { Command } from 'lucide-react'
-import Link from 'next/dist/client/link'
-import { NavMain } from './nav-main'
-import { NavSecondary } from './nav-secondary'
+} from "@/components/ui/sidebar"
+import { APP_CONFIG, layoutPreferences } from "@/config/app-config"
+import { Command } from "lucide-react"
+import Link from "next/dist/client/link"
+import { NavMain } from "./nav-main"
+import { NavSecondary } from "./nav-secondary"
 
 function AppSidebar() {
   return (
-    <Sidebar collapsible="icon" variant="sidebar">
+    <Sidebar collapsible={layoutPreferences.collapsible} variant={layoutPreferences.variant}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:p-1.5!">
-              <Link href="/dashboard">
+              <Link href="/">
                 <Command />
                 <span className="text-base font-semibold">{APP_CONFIG.name}</span>
               </Link>
