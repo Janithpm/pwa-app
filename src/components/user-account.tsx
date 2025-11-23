@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { LogOut } from 'lucide-react'
-import Link from 'next/link'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { LogOut } from "lucide-react"
+import Link from "next/link"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,11 +10,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
   DropdownMenuGroup,
-} from '@/components/ui/dropdown-menu'
-import { getInitials } from '@/lib/utils'
-import { useCurrentUser } from '@/lib/auth/use-session'
-import { accountDropdownItems } from '@/config/routes'
-import { authClient } from '@/lib/auth/auth-client'
+} from "@/components/ui/dropdown-menu"
+import { getInitials } from "@/lib/utils"
+import { useCurrentUser } from "@/lib/auth/use-session"
+import { accountDropdownItems } from "@/config/routes"
+import { authClient } from "@/lib/auth/auth-client"
+import { Button } from "./ui/button"
 
 export function UserAccount() {
   const { user } = useCurrentUser()
@@ -26,7 +27,7 @@ export function UserAccount() {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
-          window.location.href = '/auth/sign-in'
+          window.location.href = "/auth/sign-in"
         },
       },
     })
@@ -35,12 +36,12 @@ export function UserAccount() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="cursor-pointer border-0 bg-transparent p-0 focus:outline-none">
+        <Button className="cursor-pointer p-0 focus:outline-none" variant="ghost" size="icon">
           <Avatar className="size-9 rounded-lg">
             <AvatarImage src={user.image || undefined} alt={user.name} />
             <AvatarFallback className="rounded-lg">{getInitials(user.name)}</AvatarFallback>
           </Avatar>
-        </button>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="min-w-56 space-y-1 rounded-lg"
