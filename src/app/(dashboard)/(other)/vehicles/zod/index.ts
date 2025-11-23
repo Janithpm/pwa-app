@@ -26,7 +26,7 @@ export const vehicleSchema = z.object({
 
 export type VehicleFormValues = z.infer<typeof vehicleSchema>
 
-export const pricingSchema = z.object({
+export const ratesSchema = z.object({
   rates: z.array(
     z.object({
       rateType: z.enum(["daily", "weekly", "monthly"], { message: "Rate type is required" }),
@@ -35,4 +35,4 @@ export const pricingSchema = z.object({
   ),
 })
 
-export type PricingDetailsFormValues = z.infer<typeof pricingSchema>
+export type ratesFormValues = z.infer<typeof ratesSchema>
