@@ -1,20 +1,23 @@
 "use client"
 
-import { LogOut } from "lucide-react"
 import Link from "next/link"
+
+import { LogOut } from "lucide-react"
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuGroup,
 } from "@/components/ui/dropdown-menu"
-import { getInitials } from "@/lib/utils"
-import { useCurrentUser } from "@/lib/auth/use-session"
 import { accountDropdownItems } from "@/config/routes"
 import { authClient } from "@/lib/auth/auth-client"
+import { useCurrentUser } from "@/lib/auth/use-session"
+import { getInitials } from "@/lib/utils"
+
 import { Button } from "./ui/button"
 
 export function UserAccount() {

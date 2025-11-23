@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from "react"
 
 export const useMediaQuery = (query: string) => {
   const [matches, setMatches] = useState<boolean>(false)
@@ -6,18 +6,12 @@ export const useMediaQuery = (query: string) => {
   useEffect(() => {
     const mediaQueryList = window.matchMedia(query)
 
-    // Set initial state
     setMatches(mediaQueryList.matches)
-
-    // Define the update function with correct type
     const updateMatches = (event: MediaQueryListEvent) => setMatches(event.matches)
-
-    // Add event listener
-    mediaQueryList.addEventListener('change', updateMatches)
+    mediaQueryList.addEventListener("change", updateMatches)
 
     return () => {
-      // Remove event listener
-      mediaQueryList.removeEventListener('change', updateMatches)
+      mediaQueryList.removeEventListener("change", updateMatches)
     }
   }, [query])
 

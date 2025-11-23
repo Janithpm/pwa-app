@@ -1,4 +1,10 @@
-'use client'
+"use client"
+
+import { useRouter } from "next/navigation"
+
+import { UserWithRole } from "better-auth/plugins/admin"
+import { MoreHorizontal } from "lucide-react"
+import { toast } from "sonner"
 
 import {
   AlertDialog,
@@ -10,21 +16,17 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
+} from "@/components/ui/alert-dialog"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-import { TableCell, TableRow } from '@/components/ui/table'
-import { UserWithRole } from 'better-auth/plugins/admin'
-import { MoreHorizontal } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { toast } from 'sonner'
+} from "@/components/ui/dropdown-menu"
+import { TableCell, TableRow } from "@/components/ui/table"
 
 export function UserRow({ user, selfId }: { user: UserWithRole; selfId: string }) {
   const router = useRouter()
@@ -32,22 +34,22 @@ export function UserRow({ user, selfId }: { user: UserWithRole; selfId: string }
 
   async function handleImpersonateUser(userId: string) {
     try {
-      const response = await fetch('/api/admin/impersonate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/admin/impersonate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId }),
       })
 
       if (!response.ok) {
         const error = await response.json()
-        toast.error(error.error || 'Failed to impersonate')
+        toast.error(error.error || "Failed to impersonate")
         return
       }
 
-      toast.success('Impersonating user')
-      window.location.href = '/'
+      toast.success("Impersonating user")
+      window.location.href = "/"
     } catch (error) {
-      toast.error('Failed to impersonate user')
+      toast.error("Failed to impersonate user")
       console.error(error)
     }
   }
@@ -55,19 +57,19 @@ export function UserRow({ user, selfId }: { user: UserWithRole; selfId: string }
   async function handleBanUser(userId: string) {
     try {
       const response = await fetch(`/api/admin/users/${userId}/ban`, {
-        method: 'POST',
+        method: "POST",
       })
 
       if (!response.ok) {
         const error = await response.json()
-        toast.error(error.error || 'Failed to ban user')
+        toast.error(error.error || "Failed to ban user")
         return
       }
 
-      toast.success('User banned')
+      toast.success("User banned")
       router.refresh()
     } catch (error) {
-      toast.error('Failed to ban user')
+      toast.error("Failed to ban user")
       console.error(error)
     }
   }
@@ -75,19 +77,19 @@ export function UserRow({ user, selfId }: { user: UserWithRole; selfId: string }
   async function handleUnbanUser(userId: string) {
     try {
       const response = await fetch(`/api/admin/users/${userId}/unban`, {
-        method: 'POST',
+        method: "POST",
       })
 
       if (!response.ok) {
         const error = await response.json()
-        toast.error(error.error || 'Failed to unban user')
+        toast.error(error.error || "Failed to unban user")
         return
       }
 
-      toast.success('User unbanned')
+      toast.success("User unbanned")
       router.refresh()
     } catch (error) {
-      toast.error('Failed to unban user')
+      toast.error("Failed to unban user")
       console.error(error)
     }
   }
@@ -95,18 +97,18 @@ export function UserRow({ user, selfId }: { user: UserWithRole; selfId: string }
   async function handleRevokeSessions(userId: string) {
     try {
       const response = await fetch(`/api/admin/users/${userId}/sessions`, {
-        method: 'DELETE',
+        method: "DELETE",
       })
 
       if (!response.ok) {
         const error = await response.json()
-        toast.error(error.error || 'Failed to revoke sessions')
+        toast.error(error.error || "Failed to revoke sessions")
         return
       }
 
-      toast.success('User sessions revoked')
+      toast.success("User sessions revoked")
     } catch (error) {
-      toast.error('Failed to revoke sessions')
+      toast.error("Failed to revoke sessions")
       console.error(error)
     }
   }
@@ -114,19 +116,19 @@ export function UserRow({ user, selfId }: { user: UserWithRole; selfId: string }
   async function handleRemoveUser(userId: string) {
     try {
       const response = await fetch(`/api/admin/users/${userId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       })
 
       if (!response.ok) {
         const error = await response.json()
-        toast.error(error.error || 'Failed to delete user')
+        toast.error(error.error || "Failed to delete user")
         return
       }
 
-      toast.success('User deleted')
+      toast.success("User deleted")
       router.refresh()
     } catch (error) {
-      toast.error('Failed to delete user')
+      toast.error("Failed to delete user")
       console.error(error)
     }
   }
@@ -135,7 +137,7 @@ export function UserRow({ user, selfId }: { user: UserWithRole; selfId: string }
     <TableRow key={user.id}>
       <TableCell>
         <div>
-          <div className="font-medium">{user.name || 'No name'}</div>
+          <div className="font-medium">{user.name || "No name"}</div>
           <div className="text-sm text-muted-foreground">{user.email}</div>
           <div className="flex items-center gap-2 not-empty:mt-2">
             {user.banned && <Badge variant="destructive">Banned</Badge>}
@@ -145,7 +147,7 @@ export function UserRow({ user, selfId }: { user: UserWithRole; selfId: string }
         </div>
       </TableCell>
       <TableCell>
-        <Badge variant={user.role === 'admin' ? 'default' : 'secondary'}>{user.role}</Badge>
+        <Badge variant={user.role === "admin" ? "default" : "secondary"}>{user.role}</Badge>
       </TableCell>
       <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
       <TableCell>

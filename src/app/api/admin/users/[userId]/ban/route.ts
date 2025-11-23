@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server'
-import { requireAdmin } from '@/lib/auth/get-session'
-import { auth } from '@/lib/auth/auth'
-import { headers } from 'next/headers'
+import { headers } from "next/headers"
+import { NextResponse } from "next/server"
+
+import { auth } from "@/lib/auth/auth"
+import { requireAdmin } from "@/lib/auth/get-session"
 
 export async function POST(_request: Request, { params }: { params: { userId: string } }) {
   try {
@@ -16,15 +17,15 @@ export async function POST(_request: Request, { params }: { params: { userId: st
     return NextResponse.json(result)
   } catch (error) {
     if (error instanceof Error) {
-      if (error.message === 'Unauthorized') {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      if (error.message === "Unauthorized") {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
       }
-      if (error.message.includes('Forbidden')) {
-        return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+      if (error.message.includes("Forbidden")) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 })
       }
     }
 
-    console.error('Error banning user:', error)
-    return NextResponse.json({ error: 'Failed to ban user' }, { status: 500 })
+    console.error("Error banning user:", error)
+    return NextResponse.json({ error: "Failed to ban user" }, { status: 500 })
   }
 }

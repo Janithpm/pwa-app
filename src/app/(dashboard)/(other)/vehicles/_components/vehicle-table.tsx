@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+
 import {
   ColumnFiltersState,
   flexRender,
@@ -23,6 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+
 import { columns, data } from "./columns"
 
 export function VehicleTable() {

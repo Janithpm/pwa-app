@@ -1,7 +1,8 @@
 "use client"
 
+import { AdvancedMarker, APIProvider, Map, Pin } from "@vis.gl/react-google-maps"
+
 import { env } from "@/lib/env"
-import { APIProvider, Map, AdvancedMarker, Pin } from "@vis.gl/react-google-maps"
 
 export default function GoogleMap() {
   const position = { lat: 6.926944, lng: 79.858333 }

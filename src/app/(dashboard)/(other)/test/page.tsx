@@ -1,9 +1,11 @@
-'use client'
+"use client"
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { NoteForm } from '@/components/note-form'
-import { NoteList } from '@/components/note-list'
-import { useState } from 'react'
+import { useState } from "react"
+
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
+
+import { NoteForm } from "@/components/note-form"
+import { NoteList } from "@/components/note-list"
 
 export default function TestPage() {
   const [queryClient] = useState(() => new QueryClient())

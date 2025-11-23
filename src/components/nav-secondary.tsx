@@ -1,14 +1,15 @@
-'use client'
+"use client"
 
-import * as React from 'react'
+import * as React from "react"
+
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@/components/ui/sidebar'
-import { secondaryNavItems } from '@/config/routes'
+} from "@/components/ui/sidebar"
+import { secondaryNavItems } from "@/config/routes"
 
 export function NavSecondary({ ...props }: React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   return (

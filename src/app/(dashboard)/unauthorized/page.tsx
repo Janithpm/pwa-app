@@ -1,6 +1,6 @@
-import Link from 'next/link'
+import Link from "next/link"
 
-import { Lock } from 'lucide-react'
+import { Lock } from "lucide-react"
 
 export default function page() {
   return (

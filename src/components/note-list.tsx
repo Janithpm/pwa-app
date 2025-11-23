@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery } from "@tanstack/react-query"
 
 interface Note {
   id: number
@@ -15,10 +15,10 @@ export function NoteList() {
     isLoading,
     isError,
   } = useQuery<Note[]>({
-    queryKey: ['notes'],
+    queryKey: ["notes"],
     queryFn: async () => {
-      const response = await fetch('/api/notes')
-      if (!response.ok) throw new Error('Failed to fetch notes')
+      const response = await fetch("/api/notes")
+      if (!response.ok) throw new Error("Failed to fetch notes")
       return response.json()
     },
   })

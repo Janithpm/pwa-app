@@ -1,14 +1,16 @@
-import { ReactNode } from 'react'
-import { Command } from 'lucide-react'
-import { Separator } from '@/components/ui/separator'
-import { APP_CONFIG } from '@/config/app-config'
-import { getSession } from '@/lib/auth/get-session'
-import { redirect } from 'next/navigation'
+import { ReactNode } from "react"
+import { redirect } from "next/navigation"
+
+import { Command } from "lucide-react"
+
+import { Separator } from "@/components/ui/separator"
+import { APP_CONFIG } from "@/config/app-config"
+import { getSession } from "@/lib/auth/get-session"
 
 export default async function AuthLayout({ children }: Readonly<{ children: ReactNode }>) {
   const session = await getSession()
   if (session) {
-    redirect('/')
+    redirect("/")
   }
 
   return (

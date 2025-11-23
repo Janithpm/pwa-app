@@ -1,7 +1,10 @@
-import React from 'react'
-import { SignInForm } from './sign-in-form'
-import { APP_CONFIG } from '@/config/app-config'
-import { Globe } from 'lucide-react'
+import React from "react"
+
+import { Globe } from "lucide-react"
+
+import { APP_CONFIG } from "@/config/app-config"
+
+import { SignInForm } from "./sign-in-form"
 
 function SignInPage() {
   return (

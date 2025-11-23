@@ -1,6 +1,6 @@
-'use client'
+"use client"
 
-import { authClient } from './auth-client'
+import { authClient } from "./auth-client"
 
 export function useCurrentSession() {
   const { data, isPending, error } = authClient.useSession()

@@ -1,4 +1,5 @@
 import { LayoutPreferences } from "@/types/config"
+
 import packageJson from "../../package.json"
 
 const currentYear = new Date().getFullYear()

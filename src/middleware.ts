@@ -1,9 +1,10 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import { auth } from '@/lib/auth/auth'
+import type { NextRequest } from "next/server"
+import { NextResponse } from "next/server"
 
-const publicRoutes = ['/auth/sign-in', '/not-found']
-const authRoutes = ['/auth/sign-in']
+import { auth } from "@/lib/auth/auth"
+
+const publicRoutes = ["/auth/sign-in", "/not-found"]
+const authRoutes = ["/auth/sign-in"]
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -17,12 +18,12 @@ export async function middleware(request: NextRequest) {
   const isPublicRoute = publicRoutes.some(route => pathname.startsWith(route))
 
   if (isAuthenticated && isAuthRoute) {
-    return NextResponse.redirect(new URL('/', request.url))
+    return NextResponse.redirect(new URL("/", request.url))
   }
 
   if (!isAuthenticated && !isPublicRoute) {
-    const signInUrl = new URL('/auth/sign-in', request.url)
-    signInUrl.searchParams.set('callbackUrl', pathname)
+    const signInUrl = new URL("/auth/sign-in", request.url)
+    signInUrl.searchParams.set("callbackUrl", pathname)
     return NextResponse.redirect(signInUrl)
   }
 
@@ -40,6 +41,6 @@ export const config = {
      * - public folder files (images, manifest, service-worker, etc)
      * - Files with extensions (.svg, .png, .jpg, .jpeg, .gif, .webp, .ico, .css, .js)
      */
-    '/((?!api/auth|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)',
+    "/((?!api/auth|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)",
   ],
 }

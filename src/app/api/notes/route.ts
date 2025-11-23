@@ -1,12 +1,14 @@
-import { db } from '@/db/db'
-import { notesTable } from '@/db/schemas/test-schema'
-import { NextResponse } from 'next/server'
-import { z } from 'zod'
-import { requireAuth } from '@/lib/auth/get-session'
+import { NextResponse } from "next/server"
+
+import { z } from "zod"
+
+import { db } from "@/db/db"
+import { notesTable } from "@/db/schemas/test-schema"
+import { requireAuth } from "@/lib/auth/get-session"
 
 const createNoteSchema = z.object({
-  title: z.string().min(1, 'Title is required'),
-  content: z.string().min(1, 'Content is required'),
+  title: z.string().min(1, "Title is required"),
+  content: z.string().min(1, "Content is required"),
 })
 
 export async function GET() {
@@ -24,12 +26,12 @@ export async function GET() {
 
     return NextResponse.json(notes)
   } catch (error) {
-    if (error instanceof Error && error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
-    console.error('Error fetching notes:', error)
-    return NextResponse.json({ error: 'Failed to fetch notes' }, { status: 500 })
+    console.error("Error fetching notes:", error)
+    return NextResponse.json({ error: "Failed to fetch notes" }, { status: 500 })
   }
 }
 
@@ -43,17 +45,17 @@ export async function POST(request: Request) {
 
     return NextResponse.json(newNote, { status: 201 })
   } catch (error) {
-    if (error instanceof Error && error.message === 'Unauthorized') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: 'Validation failed', details: error.issues },
+        { error: "Validation failed", details: error.issues },
         { status: 400 },
       )
     }
-    console.error('Error creating note:', error)
-    return NextResponse.json({ error: 'Failed to create note' }, { status: 500 })
+    console.error("Error creating note:", error)
+    return NextResponse.json({ error: "Failed to create note" }, { status: 500 })
   }
 }

@@ -1,35 +1,31 @@
-'use client'
+"use client"
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { useState } from 'react'
+import { useState } from "react"
 
-interface User {
-  id: number
-  name: string
-  email: string
-}
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 export function NoteForm() {
   const queryClient = useQueryClient()
-  const [title, setTitle] = useState('')
-  const [content, setContent] = useState('')
+  const [title, setTitle] = useState("")
+  const [content, setContent] = useState("")
 
   const mutation = useMutation({
     mutationFn: async (data: { title: string; content: string }) => {
-      const response = await fetch('/api/notes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/notes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       })
-      if (!response.ok) throw new Error('Failed to create note')
+      if (!response.ok) throw new Error("Failed to create note")
       return response.json()
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notes'] })
-      setTitle('')
-      setContent('')
+      queryClient.invalidateQueries({ queryKey: ["notes"] })
+      setTitle("")
+      setContent("")
     },
   })
 
@@ -67,7 +63,7 @@ export function NoteForm() {
       </div>
 
       <Button type="submit" disabled={mutation.isPending}>
-        {mutation.isPending ? 'Creating...' : 'Create Note'}
+        {mutation.isPending ? "Creating..." : "Create Note"}
       </Button>
 
       {mutation.isError && (

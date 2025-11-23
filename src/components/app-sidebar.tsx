@@ -1,5 +1,9 @@
 "use client"
 
+import Link from "next/dist/client/link"
+
+import { Command } from "lucide-react"
+
 import {
   Sidebar,
   SidebarContent,
@@ -10,8 +14,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { APP_CONFIG, layoutPreferences } from "@/config/app-config"
-import { Command } from "lucide-react"
-import Link from "next/dist/client/link"
+
 import { NavMain } from "./nav-main"
 import { NavSecondary } from "./nav-secondary"
 

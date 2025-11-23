@@ -1,10 +1,13 @@
-'use client'
+"use client"
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import { Button } from '@/components/ui/button'
-import { Checkbox } from '@/components/ui/checkbox'
+import { useForm } from "react-hook-form"
+import { useSearchParams } from "next/navigation"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { toast } from "sonner"
+
+import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -12,22 +15,20 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { authClient } from '@/lib/auth/auth-client'
-import { type SignInFormData, SignInFormSchema } from '@/zod/auth-forms'
-import { useRouter, useSearchParams } from 'next/navigation'
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { authClient } from "@/lib/auth/auth-client"
+import { type SignInFormData, SignInFormSchema } from "@/zod/auth-forms"
 
 export function SignInForm() {
-  const router = useRouter()
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/'
+  const callbackUrl = searchParams.get("callbackUrl") || "/"
 
   const form = useForm<SignInFormData>({
     resolver: zodResolver(SignInFormSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       remember: false,
     },
   })
@@ -38,17 +39,17 @@ export function SignInForm() {
         { ...data },
         {
           onError: error => {
-            toast.error('Sign in failed')
+            toast.error("Sign in failed")
             console.error(error)
           },
           onSuccess: () => {
-            toast.success('Successfully signed in!')
+            toast.success("Successfully signed in!")
             window.location.href = callbackUrl
           },
         },
       )
     } catch (error) {
-      toast.error('An unexpected error occurred. Please try again.')
+      toast.error("An unexpected error occurred. Please try again.")
       console.error(error)
     }
   }

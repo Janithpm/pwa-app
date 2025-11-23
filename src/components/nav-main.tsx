@@ -1,15 +1,17 @@
-'use client'
+"use client"
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { ChevronRight } from 'lucide-react'
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+import Link from "next/link"
+import { usePathname } from "next/navigation"
+
+import { ChevronRight } from "lucide-react"
+
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+} from "@/components/ui/dropdown-menu"
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -21,9 +23,9 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   useSidebar,
-} from '@/components/ui/sidebar'
-import { sidebarItems } from '@/config/routes'
-import { NavMainItem } from '@/types/navigation'
+} from "@/components/ui/sidebar"
+import { sidebarItems } from "@/config/routes"
+import { NavMainItem } from "@/types/navigation"
 
 const NavItemExpanded = ({
   item,
@@ -31,8 +33,8 @@ const NavItemExpanded = ({
   isSubmenuOpen,
 }: {
   item: NavMainItem
-  isActive: (url: string, subItems?: NavMainItem['subItems']) => boolean
-  isSubmenuOpen: (subItems?: NavMainItem['subItems']) => boolean
+  isActive: (url: string, subItems?: NavMainItem["subItems"]) => boolean
+  isSubmenuOpen: (subItems?: NavMainItem["subItems"]) => boolean
 }) => {
   return (
     <Collapsible
@@ -51,7 +53,7 @@ const NavItemExpanded = ({
             </SidebarMenuButton>
           ) : (
             <SidebarMenuButton asChild isActive={isActive(item.url)} tooltip={item.title}>
-              <Link href={item.url} target={item.newTab ? '_blank' : undefined}>
+              <Link href={item.url} target={item.newTab ? "_blank" : undefined}>
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
               </Link>
@@ -64,7 +66,7 @@ const NavItemExpanded = ({
               {item.subItems.map(subItem => (
                 <SidebarMenuSubItem key={subItem.title}>
                   <SidebarMenuSubButton isActive={isActive(subItem.url)} asChild>
-                    <Link href={subItem.url} target={subItem.newTab ? '_blank' : undefined}>
+                    <Link href={subItem.url} target={subItem.newTab ? "_blank" : undefined}>
                       {subItem.icon && <subItem.icon />}
                       <span>{subItem.title}</span>
                     </Link>
@@ -84,7 +86,7 @@ const NavItemCollapsed = ({
   isActive,
 }: {
   item: NavMainItem
-  isActive: (url: string, subItems?: NavMainItem['subItems']) => boolean
+  isActive: (url: string, subItems?: NavMainItem["subItems"]) => boolean
 }) => {
   return (
     <SidebarMenuItem key={item.title}>
@@ -105,7 +107,7 @@ const NavItemCollapsed = ({
                 className="focus-visible:ring-0"
                 isActive={isActive(subItem.url)}
               >
-                <Link href={subItem.url} target={subItem.newTab ? '_blank' : undefined}>
+                <Link href={subItem.url} target={subItem.newTab ? "_blank" : undefined}>
                   {subItem.icon && <subItem.icon className="[&>svg]:text-sidebar-foreground" />}
                   <span>{subItem.title}</span>
                 </Link>
@@ -122,14 +124,14 @@ export function NavMain() {
   const path = usePathname()
   const { state, isMobile } = useSidebar()
 
-  const isItemActive = (url: string, subItems?: NavMainItem['subItems']) => {
+  const isItemActive = (url: string, subItems?: NavMainItem["subItems"]) => {
     if (subItems?.length) {
       return subItems.some(sub => path.startsWith(sub.url))
     }
     return path === url
   }
 
-  const isSubmenuOpen = (subItems?: NavMainItem['subItems']) => {
+  const isSubmenuOpen = (subItems?: NavMainItem["subItems"]) => {
     return subItems?.some(sub => path.startsWith(sub.url)) ?? false
   }
 
@@ -141,7 +143,7 @@ export function NavMain() {
           <SidebarGroupContent className="flex flex-col gap-2">
             <SidebarMenu>
               {group.items.map((item: NavMainItem) => {
-                if (state === 'collapsed' && !isMobile) {
+                if (state === "collapsed" && !isMobile) {
                   if (!item.subItems) {
                     return (
                       <SidebarMenuItem key={item.title}>
@@ -150,7 +152,7 @@ export function NavMain() {
                           tooltip={item.title}
                           isActive={isItemActive(item.url)}
                         >
-                          <Link href={item.url} target={item.newTab ? '_blank' : undefined}>
+                          <Link href={item.url} target={item.newTab ? "_blank" : undefined}>
                             {item.icon && <item.icon />}
                             <span>{item.title}</span>
                           </Link>

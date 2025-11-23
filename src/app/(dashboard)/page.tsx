@@ -1,10 +1,11 @@
-import { Button } from '@/components/ui/button'
-import Link from 'next/link'
-import { getSession } from '@/lib/auth/get-session'
+import Link from "next/link"
+
+import { Button } from "@/components/ui/button"
+import { getSession } from "@/lib/auth/get-session"
 
 export default async function Home() {
   const session = await getSession()
-  const isAdmin = session?.user.role === 'admin'
+  const isAdmin = session?.user.role === "admin"
 
   return (
     <div className="my-6 px-4 max-w-md mx-auto">
