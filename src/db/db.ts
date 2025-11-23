@@ -1,7 +1,7 @@
-import { neon } from '@neondatabase/serverless'
-import { drizzle } from 'drizzle-orm/neon-http'
-import * as schema from './schemas'
-import { env } from '@/lib/env'
+import { neon } from "@neondatabase/serverless"
+import { drizzle } from "drizzle-orm/neon-http"
+import * as schema from "./schemas"
+import { env } from "@/lib/env"
 
 let db: ReturnType<typeof drizzle> | null = null
 

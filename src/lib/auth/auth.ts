@@ -1,18 +1,18 @@
-import { betterAuth } from 'better-auth'
-import { drizzleAdapter } from 'better-auth/adapters/drizzle'
-import { nextCookies } from 'better-auth/next-js'
-import { db } from '@/db/db'
-import { admin } from 'better-auth/plugins/admin'
-import { env } from '@/lib/env'
+import { betterAuth } from "better-auth"
+import { drizzleAdapter } from "better-auth/adapters/drizzle"
+import { nextCookies } from "better-auth/next-js"
+import { db } from "@/db/db"
+import { admin } from "better-auth/plugins/admin"
+import { env } from "@/lib/env"
 
 export const auth = betterAuth({
   database: drizzleAdapter(db(), {
-    provider: 'pg',
+    provider: "pg",
   }),
   secret: env.BETTER_AUTH_SECRET,
   baseURL: env.BETTER_AUTH_URL,
   rateLimit: {
-    storage: 'database',
+    storage: "database",
     points: 10,
     duration: 60,
   },
@@ -25,9 +25,9 @@ export const auth = betterAuth({
     updateAge: 60 * 60 * 24,
     cookieOptions: {
       httpOnly: true,
-      secure: env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      path: '/',
+      secure: env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
     },
   },
   plugins: [nextCookies(), admin()],
