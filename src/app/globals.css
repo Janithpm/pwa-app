@@ -166,3 +166,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media (min-width: 768px) {
+  .custom-dialog-width {
+    width: 100vw !important;
+    max-width: 70vw !important;
+  }
+
+  .custom-dialog-width[data-state="open"] {
+    width: 100vw !important;
+    max-width: 70vw !important;
+  }
+}
