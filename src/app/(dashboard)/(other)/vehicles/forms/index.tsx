@@ -1,12 +1,24 @@
 "use client"
 
-import { Fragment, useState } from "react"
+import { createElement, useState } from "react"
 import { useForm } from "react-hook-form"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Car, IdCard } from "lucide-react"
+import { Car, ChevronLeft, ChevronRight, IdCard, Loader2, Save } from "lucide-react"
 
-import { ratesFormValues, ratesSchema, VehicleFormValues, vehicleSchema } from "../zod"
+import { Button } from "@/components/ui/button"
+
+import {
+  FuelType,
+  ratesFormValues,
+  ratesSchema,
+  Transmission,
+  VehicleFormValues,
+  vehicleSchema,
+  VehicleStatus,
+} from "../zod"
+import RatesForm from "./rates-form"
+import VehicleDetailsForm from "./vehicle-details-form"
 
 type NewVehicleFormProps = {
   onClose?: () => void
@@ -28,16 +40,15 @@ function NewVehicleForm({ onClose }: NewVehicleFormProps) {
     defaultValues: {
       make: formData.make || "",
       model: formData.model || "",
-      category: formData.category || "",
       year: formData.year || new Date().getFullYear(),
       vin: formData.vin || "",
       licensePlate: formData.licensePlate || "",
       color: formData.color || "",
       mileage: formData.mileage || 0,
-      transmission: formData.transmission || "automatic",
+      transmission: formData.transmission || Transmission.AUTOMATIC,
       seats: formData.seats || 1,
-      fuelType: formData.fuelType || "gasoline",
-      status: formData.status || "available",
+      fuelType: formData.fuelType || FuelType.GASOLINE,
+      status: formData.status || VehicleStatus.AVAILABLE,
     },
   })
 
@@ -61,10 +72,10 @@ function NewVehicleForm({ onClose }: NewVehicleFormProps) {
 
   const renderStepContent = () => {
     switch (currentStep) {
-      case 1:
-        return <div>Vehicle Details Form</div>
       case 2:
-        return <div>Rates Form</div>
+        return <VehicleDetailsForm form={vehicleForm} />
+      case 1:
+        return <RatesForm form={ratesForm} />
       default:
         return <div>Vehicle Details Form</div>
     }
@@ -73,6 +84,7 @@ function NewVehicleForm({ onClose }: NewVehicleFormProps) {
   const handleNext = async () => {
     const currentForm = getCurrentForm()
     const isValid = await currentForm.trigger()
+    console.log(isValid)
 
     if (isValid) {
       const data = currentForm.getValues()
@@ -107,59 +119,52 @@ function NewVehicleForm({ onClose }: NewVehicleFormProps) {
   return (
     <div className="h-full flex flex-col">
       <div className="shrink-0 px-8 py-6 pb-4 border-b">
-        <div className="flex items-center justify-center w-full">
-          {steps.map((step, index) => {
-            const Icon = step.icon
-            const isActive = currentStep === step.id
-            const isCompleted = currentStep > step.id
+        <div className="flex items-center gap-2">
+          {createElement(steps[currentStep - 1].icon, { className: "w-5 h-5" })}
+          <h2 className="text-xl font-semibold">{steps[currentStep - 1].title}</h2>
+        </div>
+      </div>
 
-            return (
-              <Fragment key={step.id}>
-                <div className="flex items-start justify-center gap-2 last:mr-12">
-                  <div
-                    className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${
-                      isActive
-                        ? "border-primary bg-primary text-primary-foreground"
-                        : isCompleted
-                          ? "border-green-500 bg-green-500 text-white"
-                          : "border-muted-foreground bg-background"
-                    }`}
-                  >
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <div className="text-left">
-                    <div
-                      className={`text-sm font-medium ${
-                        isActive
-                          ? "text-primary"
-                          : isCompleted
-                            ? "text-green-600"
-                            : "text-muted-foreground"
-                      }`}
-                    >
-                      Step {step.id}
-                    </div>
-                    <div
-                      className={`text-xs ${
-                        isActive
-                          ? "text-primary"
-                          : isCompleted
-                            ? "text-green-600"
-                            : "text-muted-foreground"
-                      }`}
-                    >
-                      {step.title}
-                    </div>
-                  </div>
-                </div>
-                {index < steps.length - 1 && (
-                  <div
-                    className={`flex-1 h-0.5 mx-4 ${isCompleted ? "bg-green-500" : "bg-muted"}`}
-                  />
-                )}
-              </Fragment>
-            )
-          })}
+      <div className="flex-1 overflow-y-auto">
+        <div className="px-8 py-6">{renderStepContent()}</div>
+      </div>
+
+      <div className="shrink-0 px-8 py-6 mb-4 md:mb-0 border-t">
+        <div className="flex justify-between">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleBack}
+            disabled={currentStep === 1}
+            className="flex items-center gap-2 bg-transparent"
+          >
+            <ChevronLeft className="w-4 h-4" />
+            Previous
+          </Button>
+
+          {currentStep < 3 ? (
+            <Button
+              type="button"
+              onClick={handleNext}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              Next
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+          ) : (
+            <Button
+              type="button"
+              onClick={handleSave}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              {isLoading ? (
+                <Loader2 className="animate-spin w-4 h-4" />
+              ) : (
+                <Save className="w-4 h-4" />
+              )}
+              Save Employee
+            </Button>
+          )}
         </div>
       </div>
     </div>

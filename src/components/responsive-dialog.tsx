@@ -100,14 +100,14 @@ export const ResponsiveDialogContent = ({
 
   if (isMobile) {
     return (
-      <DrawerContent className={cn(className)} {...props}>
+      <DrawerContent className={cn(className, "p-0 flex flex-col")} {...props}>
         {children}
       </DrawerContent>
     )
   }
 
   return (
-    <DialogContent className={cn(className)} {...props}>
+    <DialogContent className={cn(className, "p-0 flex flex-col")} {...props}>
       {children}
     </DialogContent>
   )
