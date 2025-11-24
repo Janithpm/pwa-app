@@ -72,9 +72,9 @@ function NewVehicleForm({ onClose }: NewVehicleFormProps) {
 
   const renderStepContent = () => {
     switch (currentStep) {
-      case 2:
-        return <VehicleDetailsForm form={vehicleForm} />
       case 1:
+        return <VehicleDetailsForm form={vehicleForm} />
+      case 2:
         return <RatesForm form={ratesForm} />
       default:
         return <div>Vehicle Details Form</div>
