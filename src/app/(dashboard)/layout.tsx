@@ -6,6 +6,7 @@ import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { layoutPreferences } from "@/config/app-config"
 import { getSession } from "@/lib/auth/get-session"
 import { cn } from "@/lib/utils"
+import { NewRentalProvider } from "@/providers/new-rental-provider"
 
 async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession()
@@ -24,7 +25,9 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
         )}
       >
         <AppHeader />
-        <div className="h-full">{children}</div>
+        <div className="h-full">
+          <NewRentalProvider>{children}</NewRentalProvider>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   )
